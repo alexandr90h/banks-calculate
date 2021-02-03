@@ -1,3 +1,44 @@
 {
-    "bank":[]
+  "banks": [
+    {
+      "name": "QWERTY",
+      "selectInterestRate": "3",
+      "maximumLoan": "6000",
+      "minimumPayment": "15",
+      "loanTerm": "18",
+      "id": 1
+    },
+    {
+      "name": "Credit Agricole",
+      "selectInterestRate": "4",
+      "maximumLoan": "8000",
+      "minimumPayment": "30",
+      "loanTerm": "36",
+      "id": 2
+    },
+    {
+      "name": "BNP Paribas",
+      "selectInterestRate": "5",
+      "maximumLoan": "10000",
+      "minimumPayment": "10",
+      "loanTerm": "18",
+      "id": 4
+    },
+    {
+      "name": "JPMorgan Chase & Co",
+      "selectInterestRate": "2",
+      "maximumLoan": "150000",
+      "minimumPayment": "20",
+      "loanTerm": "12",
+      "id": 5
+    },
+    {
+      "name": "Industrial & Commercial Bank of China",
+      "selectInterestRate": "4",
+      "maximumLoan": "200000",
+      "minimumPayment": "19",
+      "loanTerm": "24",
+      "id": 6
+    }
+  ]
 }

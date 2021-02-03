@@ -1,9 +1,18 @@
-import contactsAction from "./action";
+import bankAction from "./action";
 import * as API from "../api/Api";
 
+export const fetchBankList = () => async (dispatch) => {
+  dispatch(bankAction.fetchBankRequest());
+  try {
+    const { data } = await API.fetchBanks();
+    dispatch(bankAction.fetchBankSuccess(data));
+  } catch (error) {
+    dispatch(bankAction.fetchBankError(error.message));
+  }
+};
 export const addBank = (item) => async (dispatch) => {
-  dispatch(contactsAction.addContactsRequuest());
+  dispatch(bankAction.addBankRequest());
   API.AddBanks(item)
-    .then(({ data }) => dispatch(contactsAction.addContactsSuccess(data)))
-    .catch((error) => dispatch(contactsAction.addContactsError(error)));
+    .then(({ data }) => dispatch(bankAction.addBankSuccess(data)))
+    .catch((error) => dispatch(bankAction.addBankError(error)));
 };

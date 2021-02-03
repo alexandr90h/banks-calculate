@@ -7,10 +7,10 @@ import * as operation from "../redux/operation";
 export default function AddBankForm() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
-  const [selectInterestRate, setSelectInterestRate] = useState("");
+  const [selectInterestRate, setSelectInterestRate] = useState(1);
   const [maximumLoan, setMaximumLoan] = useState("");
   const [minimumPayment, setMinimumPayment] = useState("");
-  const [loanTerm, setLoanTerm] = useState("");
+  const [loanTerm, setLoanTerm] = useState(3);
 
   const inputChange = (e) => {
     switch (e.target.name) {
@@ -44,13 +44,14 @@ export default function AddBankForm() {
         loanTerm,
       })
     );
-    // console.log({
-    //   name,
-    //   selectInterestRate,
-    //   maximumLoan,
-    //   minimumPayment,
-    //   loanTerm,
-    // });
+    reset();
+  };
+  const reset = () => {
+    setName("");
+    setSelectInterestRate(1);
+    setMaximumLoan("");
+    setMinimumPayment("");
+    setLoanTerm(3);
   };
   return (
     <Form onSubmit={onHendleSubmitBank}>
