@@ -1,14 +1,17 @@
 import { createAction } from "@reduxjs/toolkit";
 
-const fetchBankRequest = createAction("contacts/fetchBankRequest");
-const fetchBankSuccess = createAction("contacts/fetchBankSuccess");
-const fetchBankError = createAction("contacts/fetchBankError");
+const fetchBankRequest = createAction("bank/fetchBankRequest");
+const fetchBankSuccess = createAction("bank/fetchBankSuccess");
+const fetchBankError = createAction("bank/fetchBankError");
 
-const addBankRequest = createAction("contacts/addBankRequest");
-const addBankSuccess = createAction("contacts/addBankSuccess");
-const addBankError = createAction("contacts/addBankError");
+const addBankRequest = createAction("bank/addBankRequest");
+const addBankSuccess = createAction("bank/addBankSuccess");
+const addBankError = createAction("bank/addBankError");
 
-const contactsAction = {
+const setMonthlyPayment = createAction("bank/setMonthlyPayment");
+
+const bankAction = {
+  setMonthlyPayment,
   fetchBankError,
   fetchBankSuccess,
   fetchBankRequest,
@@ -16,4 +19,4 @@ const contactsAction = {
   addBankSuccess,
   addBankError,
 };
-export default contactsAction;
+export default bankAction;

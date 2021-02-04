@@ -39,6 +39,14 @@
       "minimumPayment": "19",
       "loanTerm": "24",
       "id": 6
+    },
+    {
+      "name": "MONO",
+      "selectInterestRate": "5",
+      "maximumLoan": "100000",
+      "minimumPayment": "30000",
+      "loanTerm": 3,
+      "id": 7
     }
   ]
 }
