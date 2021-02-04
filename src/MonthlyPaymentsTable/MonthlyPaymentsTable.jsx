@@ -42,9 +42,34 @@ if (!Math.ceil10) {
   };
 }
 
-export default function MonthlyPaymentsTable() {
+export default function MonthlyPaymentsTable(props) {
   const monthlyPayment = useSelector((state) => state.monthlyPayment);
-
+  let content = [];
+  let _VV = 0;
+  for (let a = 0; a < Number(props.currentBank.loanTerm); a++) {
+    const obj = {
+      M: a + 1,
+      ZP: monthlyPayment,
+      VV:
+        ((Number(props.currentBank.selectInterestRate) * 0.01) / 12) *
+        (Number(props.initialLoan) - monthlyPayment * a),
+      BP:
+        props.initialLoan -
+        monthlyPayment * (a + 1) +
+        ((Number(props.currentBank.selectInterestRate) * 0.01) / 12) *
+          (Number(props.initialLoan) - monthlyPayment * a) +
+        _VV,
+      VK:
+        monthlyPayment * (a + 1) -
+        ((Number(props.currentBank.selectInterestRate) * 0.01) / 12) *
+          (Number(props.initialLoan) - monthlyPayment * a) -
+        _VV +
+        Number(props.downPayment),
+    };
+    content.push(obj);
+    _VV = _VV + obj.VV;
+  }
+  // console.log(getTablPaymentContent());
   return (
     <Table striped bordered hover size="sm">
       <thead>
@@ -57,13 +82,17 @@ export default function MonthlyPaymentsTable() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>{Math.round10(monthlyPayment, -2)}</td>
-          <td>3</td>
-          <td>4</td>
-          <td>5</td>
-        </tr>
+        {content.map(({ M, ZP, VV, BP, VK }) => {
+          return (
+            <tr key={M}>
+              <td>{M}</td>
+              <td>{Math.round10(ZP, -2)}</td>
+              <td>{Math.round10(VV, -2)}</td>
+              <td>{Math.round10(BP, -2)}</td>
+              <td>{Math.round10(VK, 2)}</td>
+            </tr>
+          );
+        })}
       </tbody>
     </Table>
   );

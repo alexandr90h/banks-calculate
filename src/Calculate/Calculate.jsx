@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import * as operation from "../redux/operation";
 import bankAction from "../redux/action";
 import MonthlyPaymentsTable from "../MonthlyPaymentsTable/MonthlyPaymentsTable";
+import Alert from "react-bootstrap/Alert";
 
 export default function Calculate() {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ export default function Calculate() {
   const [currentBank, setCurrentBank] = useState({});
   const [initialLoan, setInitialLoan] = useState("");
   const [downPayment, setDownPayment] = useState("");
-  const [bankName, setBankName] = useState();
+  const [onAlertShow, setOnAlertShow] = useState(false);
   const inputChange = (e) => {
     switch (e.target.name) {
       case "initialLoan":
@@ -23,7 +24,6 @@ export default function Calculate() {
         setDownPayment(e.target.value);
         break;
       case "bankName":
-        setBankName(e.target.value);
         setCurrentBank(banksNames.find(({ name }) => name === e.target.value));
         break;
       default:
@@ -32,7 +32,6 @@ export default function Calculate() {
   };
   const onMonthlyPayment = (P, r, n) => {
     const _r = r / 100;
-    console.log(P, r, n);
     const M =
       (P * (_r / 12) * Math.pow(1 + _r / 12, n)) /
       (Math.pow(1 + _r / 12, n) - 1);
@@ -40,8 +39,17 @@ export default function Calculate() {
   };
   const onHendleSubmitQuery = (e) => {
     e.preventDefault();
-    console.log(bankName);
-    console.log(currentBank);
+    if (currentBank.maximumLoan < initialLoan) {
+      setOnAlertShow(true);
+      return;
+    }
+    if (
+      (currentBank.minimumPayment / 100) * currentBank.maximumLoan >
+      downPayment
+    ) {
+      setOnAlertShow(true);
+      return;
+    }
     dispatch(
       bankAction.setMonthlyPayment(
         onMonthlyPayment(
@@ -102,7 +110,27 @@ export default function Calculate() {
           Submit
         </Button>
       </Form>
-      {monthlyPayment && <MonthlyPaymentsTable currentBank={currentBank} />}
+      {monthlyPayment && (
+        <MonthlyPaymentsTable
+          currentBank={currentBank}
+          initialLoan={initialLoan}
+          downPayment={downPayment}
+        />
+      )}
+      {onAlertShow && (
+        <Alert
+          variant="danger"
+          onClose={() => setOnAlertShow(false)}
+          dismissible
+        >
+          <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+          <p>
+            Change this and that and try again. Duis mollis, est non commodo
+            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+            Cras mattis consectetur purus sit amet fermentum.
+          </p>
+        </Alert>
+      )}
     </>
   );
 }
