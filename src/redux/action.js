@@ -9,8 +9,9 @@ const addBankSuccess = createAction("bank/addBankSuccess");
 const addBankError = createAction("bank/addBankError");
 
 const setMonthlyPayment = createAction("bank/setMonthlyPayment");
-
+const tablemonthlyPayment = createAction("bank/tableMonthlyPayment");
 const bankAction = {
+  tablemonthlyPayment,
   setMonthlyPayment,
   fetchBankError,
   fetchBankSuccess,

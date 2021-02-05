@@ -11,6 +11,7 @@ export default function Calculate() {
   const dispatch = useDispatch();
   const banksNames = useSelector((state) => state.banks);
   const monthlyPayment = useSelector((state) => state.monthlyPayment);
+
   const [currentBank, setCurrentBank] = useState({});
   const [initialLoan, setInitialLoan] = useState("");
   const [downPayment, setDownPayment] = useState("");
@@ -39,17 +40,16 @@ export default function Calculate() {
   };
   const onHendleSubmitQuery = (e) => {
     e.preventDefault();
-    if (currentBank.maximumLoan < initialLoan) {
+    if (Number(currentBank.maximumLoan) < Number(initialLoan)) {
       setOnAlertShow(true);
       return;
     }
-    if (
-      (currentBank.minimumPayment / 100) * currentBank.maximumLoan >
-      downPayment
-    ) {
+    if (Number(currentBank.minimumPayment) > Number(downPayment)) {
       setOnAlertShow(true);
       return;
     }
+    // dispatch(bankAction.tablemonthlyPayment([]));
+
     dispatch(
       bankAction.setMonthlyPayment(
         onMonthlyPayment(

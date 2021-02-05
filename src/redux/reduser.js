@@ -9,7 +9,11 @@ const banks = createReducer([], {
 const monthlyPayment = createReducer("", {
   [bankAction.setMonthlyPayment]: (_, action) => action.payload,
 });
+const tablemonthlyPayment = createReducer([], {
+  [bankAction.tablemonthlyPayment]: (_, action) => action.payload,
+});
 export default combineReducers({
   banks,
   monthlyPayment,
+  tablemonthlyPayment,
 });

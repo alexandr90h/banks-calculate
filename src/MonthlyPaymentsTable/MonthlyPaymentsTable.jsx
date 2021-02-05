@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import Table from "react-bootstrap/Table";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import bankAction from "../redux/action";
 function decimalAdjust(type, value, exp) {
   // If the exp is undefined or zero...
   if (typeof exp === "undefined" || +exp === 0) {
@@ -43,7 +45,9 @@ if (!Math.ceil10) {
 }
 
 export default function MonthlyPaymentsTable(props) {
+  const dispatch = useDispatch();
   const monthlyPayment = useSelector((state) => state.monthlyPayment);
+  const tablemonthlyPayment = useSelector((state) => state.tablemonthlyPayment);
   let content = [];
   let _VV = 0;
   for (let a = 0; a < Number(props.currentBank.loanTerm); a++) {
@@ -69,6 +73,13 @@ export default function MonthlyPaymentsTable(props) {
     content.push(obj);
     _VV = _VV + obj.VV;
   }
+  useEffect(() => {
+    if (content.length === 0) {
+      return;
+    }
+    dispatch(bankAction.tablemonthlyPayment(content));
+    // eslint-disable-next-line
+  }, [dispatch, monthlyPayment]);
   // console.log(getTablPaymentContent());
   return (
     <Table striped bordered hover size="sm">
@@ -82,14 +93,14 @@ export default function MonthlyPaymentsTable(props) {
         </tr>
       </thead>
       <tbody>
-        {content.map(({ M, ZP, VV, BP, VK }) => {
+        {tablemonthlyPayment.map(({ M, ZP, VV, BP, VK }) => {
           return (
             <tr key={M}>
               <td>{M}</td>
               <td>{Math.round10(ZP, -2)}</td>
               <td>{Math.round10(VV, -2)}</td>
               <td>{Math.round10(BP, -2)}</td>
-              <td>{Math.round10(VK, 2)}</td>
+              <td>{Math.round10(VK, -2)}</td>
             </tr>
           );
         })}

@@ -91,7 +91,7 @@ export default function AddBankForm() {
         ></Form.Control>
       </Form.Group>
       <Form.Group controlId="exampleForm.Control3">
-        <Form.Label>Minimum down payment (%)</Form.Label>
+        <Form.Label>Minimum down payment ($)</Form.Label>
         <Form.Control
           type="text"
           placeholder="0%"
