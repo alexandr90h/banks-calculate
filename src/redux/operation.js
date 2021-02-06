@@ -5,6 +5,7 @@ export const fetchBankList = () => async (dispatch) => {
   dispatch(bankAction.fetchBankRequest());
   try {
     const { data } = await API.fetchBanks();
+    console.log(data);
     dispatch(bankAction.fetchBankSuccess(data));
   } catch (error) {
     dispatch(bankAction.fetchBankError(error.message));
